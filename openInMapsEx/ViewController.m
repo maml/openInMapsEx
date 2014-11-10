@@ -8,6 +8,8 @@
 
 #import "ViewController.h"
 
+static NSString *const kBaseMapURL = @"http://maps.apple.com/maps?q=";
+
 @interface ViewController ()
 
 @end
@@ -16,12 +18,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    [self performSelectorOnMainThread:@selector(openSesame) withObject:nil waitUntilDone:NO];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)openSesame
+{
+    NSString *headquarters = @"RocketMiles%20HQ";
+    float latitude = 41.883409;
+    float longitude = -87.642179;
+    int zoom = 12;
+    NSString *stringURL = [NSString stringWithFormat:@"%@%@@%1.6f,%1.6f&z=%d", kBaseMapURL, headquarters, latitude, longitude, zoom];
+    NSURL *url = [NSURL URLWithString:stringURL];
+    [[UIApplication sharedApplication] openURL:url];
 }
 
 @end
